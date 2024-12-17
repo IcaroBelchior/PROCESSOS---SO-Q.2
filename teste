@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PROGRAM="./dining_philosophers"
+EXECUTIONS=1000
+SUCCESS=0
+FAIL=0
+
+echo "Iniciando $EXECUTIONS execuções do programa..."
+
+for i in $(seq 1 $EXECUTIONS); do
+    $PROGRAM > output.log 2>&1
+    if [ $? -eq 0 ]; then
+        ((SUCCESS++))
+    else
+        ((FAIL++))
+        echo "Falha na execução $i" >> failures.log
+    fi
+done
+
+echo "Execuções concluídas."
+echo "Sucessos: $SUCCESS"
+echo "Falhas: $FAIL"
+
+if [ $FAIL -gt 0 ]; then
+    echo "Verifique o arquivo failures.log para detalhes das falhas."
+fi
